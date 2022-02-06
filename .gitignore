@@ -1,0 +1,12 @@
+**/dataset/**
+
+**/preprocess/**
+**/data/**
+**/output/**
+
+noise.feature
+
+**/*.state_dict
+**/subgroup.*.*
+
+**/*.pyc
