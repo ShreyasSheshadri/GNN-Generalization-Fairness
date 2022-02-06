@@ -25,6 +25,7 @@ python generate_noisy_data.py
 ```bash
 # cache for aggregated-feature subgroup
 python agg_subgroup.py  # aggregated-feature distance on original features
+
 python agg_subgroup.py --noise_on_feature  # aggregated-feature distance on noisy features
 
 # cache for node centrality subgroup
@@ -32,14 +33,20 @@ python degree_subgroup.py
 python pagerank_subgroup.py
 
 # cache for geodesic distance subgroup
-python geodesic_matrix.py && python deodesic_subgroup.py
+python geodesic_matrix.py && python geodesic_subgroup.py
 ```
+**Notes**:
+- ~~`python agg_subgroup.py`~~ Out of memory: agg = torch.sparse.mm(agg, A).to_dense().numpy()
+- ~~`python agg_subgroup.py --noise_on_feature`~~ Out of memory: agg = torch.sparse.mm(agg, A).to_dense().numpy()
+- ~~`python geodesic_matrix.py && python geodesic_subgroup.py`~~ Took a long time (9:54:31.37), thrashed a lot (page faults: 35751836, context switches: 1400962), and, eventually ran out of memory (virtual memory size: 119.53 GB, real memory size: 2.18 GB) on a 128GB main-memory EC2 instance.
+
 
 2. Train the models
 
 ```bash
 # Training on original features
 python gnn.py  # GCN
+# 169 epochs in 35m on MacBook Pro
 python gnn.py --use_sage  # SAGE
 python mlp.py  # MLP
 
