@@ -4,16 +4,15 @@ import torch_geometric.transforms as T
 import pickle
 import networkx as nx
 
-device = 'cpu'
+device = "cpu"
 device = torch.device(device)
-dataset = PygNodePropPredDataset(name='ogbn-arxiv',
-                                 transform=T.ToSparseTensor())
+dataset = PygNodePropPredDataset(name="ogbn-arxiv", transform=T.ToSparseTensor())
 data = dataset[0]
 data.adj_t = data.adj_t.to_symmetric().to(device)
 
 split_idx = dataset.get_idx_split()
-train_idx = split_idx['train'].to(device).numpy()
-test_idx = split_idx['test'].to(device).numpy()
+train_idx = split_idx["train"].to(device).numpy()
+test_idx = split_idx["test"].to(device).numpy()
 
 A = data.adj_t.to_torch_sparse_coo_tensor()
 list_A_coo = A.coalesce().indices()
@@ -33,7 +32,7 @@ for test in test_idx:
 
 
 def save_object(object_to_save, filename):
-    f = open(filename, 'wb')
+    f = open(filename, "wb")
     pickle.dump(object_to_save, f)
     f.close()
 
